@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tradersharing</title>
+  <style>
+    body { font-family: sans-serif; background: #000; color: #fff; margin: 0; padding: 0; }
+    header {
+      background: #007bff; color: white; padding: 1rem;
+      display: flex; justify-content: space-between; align-items: center; text-align: center;
+    }
+    .title {
+      font-size: 2rem; font-weight: bold; margin: 0 auto;
+      text-shadow: 1px 1px 3px #000;
+    }
+    .box {
+      background: #1c1c1c; margin: 1rem; padding: 1rem;
+      border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    select, button {
+      padding: 0.5rem; margin: 0.2rem; border-radius: 0.5rem;
+      border: 1px solid #444; background: #222; color: #fff;
+    }
+    .subtitle {
+      font-weight: bold; margin-top: 1rem;
+      font-size: 1.2rem; text-shadow: 1px 1px 2px #555;
+    }
+    ul { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="title">Tradersharing</div>
+  <img src="bell-icon.png" alt="Notifikasi" width="24">
+</header>
+
+<div class="box">
+  <label for="pair">Pasangan Mata Uang:</label>
+  <select id="pair"></select>
+</div>
+
+<div class="box" style="text-align:center">
+  <div class="subtitle">Anomali Price Action</div>
+  <p id="anomali-output">Memuat data...</p>
+  <p id="tujuan-output"></p>
+  <div id="sumber-output"></div>
+</div>
+
+<div class="box">
+  <div class="subtitle">News Mata Uang</div>
+  <ul id="news-list"><li>Memuat data...</li></ul>
+</div>
+
+<div class="box">
+  <div class="subtitle">Teknikal Price Action</div>
+  <label for="tf">Timeframe:</label>
+  <select id="tf">
+    <option>M1</option><option>M5</option><option>M15</option><option>M30</option>
+    <option>H1</option><option>H4</option><option>D1</option><option>W1</option><option>MN</option>
+  </select>
+
+  <div class="subtitle">Pilih Indikator:</div>
+  <select id="indi1"></select>
+  <select id="indi2"></select>
+  <select id="indi3"></select>
+  <select id="indi4"></select>
+  <br>
+  <button onclick="generateSignal()">Lihat Sinyal</button>
+  <div id="signal-output"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
