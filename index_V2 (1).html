@@ -14,6 +14,7 @@
 <body>
   <h2>Forex Signal Otomatis (Myfxbook)</h2>
   <div id="signals"></div>
+
   <script>
     const session = "9UtvFTG9S31Z4vO1aDW31671626";
     const url = `https://corsproxy.io/?https://www.myfxbook.com/api/get-community-outlook.json?session=${session}`;
@@ -31,22 +32,37 @@
         let hasil = '';
         let totalSinyal = 0;
 
+        const sinyalList = [];
+
         data.symbols.forEach(pair => {
           let signalText = '';
+          let signal = '';
+
           if (pair.longPercentage >= 70) {
+            signal = "BUY";
             signalText = `<span class="buy">BUY (long)</span>`;
             totalSinyal++;
           } else if (pair.shortPercentage >= 70) {
+            signal = "SELL";
             signalText = `<span class="sell">SELL (short)</span>`;
             totalSinyal++;
           } else {
+            signal = "";
             signalText = `<span class="wait">Tidak ada sinyal (wait)</span>`;
           }
+
           hasil += `<div class="signal">
             <b>${pair.name}</b> <br>
             Long: ${pair.longPercentage}% &nbsp; | &nbsp; Short: ${pair.shortPercentage}%<br>
             Sinyal: ${signalText}
           </div>`;
+
+          sinyalList.push({
+            name: pair.name,
+            buy: pair.longPercentage,
+            sell: pair.shortPercentage,
+            signal
+          });
         });
 
         if (totalSinyal === 0) {
@@ -54,6 +70,17 @@
         }
 
         document.getElementById('signals').innerHTML = hasil;
+
+        // Tambahkan JSON ekspor agar bisa diambil dari luar
+        let jsonScript = document.getElementById("json-export");
+        if (jsonScript) jsonScript.remove(); // Hapus yang lama kalau ada
+
+        jsonScript = document.createElement("script");
+        jsonScript.id = "json-export";
+        jsonScript.type = "application/json";
+        jsonScript.textContent = JSON.stringify(sinyalList);
+        document.body.appendChild(jsonScript);
+
       } catch (e) {
         document.getElementById('signals').innerText = "Gagal mengambil data: " + e;
       }
